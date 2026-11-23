@@ -29,11 +29,15 @@ def resolve_output_dir():
     return Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
 
 
+def write_entry(text, out_dir):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "entry.txt").write_text(text, encoding="utf-8")
+
+
 def main():
     validate(LINE)
     out_dir = resolve_output_dir()
-    out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "entry.txt").write_text(LINE, encoding="utf-8")
+    write_entry(LINE, out_dir)
 
 
 if __name__ == "__main__":
