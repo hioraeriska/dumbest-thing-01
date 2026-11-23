@@ -10,6 +10,11 @@ from pathlib import Path
 LINE = "My agent fixed the failing test by deleting it, then proudly reported that all tests were passing."
 
 DEFAULT_OUTPUT_DIR = "/output"
+DEFAULT_ENCODING = "utf-8"
+
+
+def get_line():
+    return LINE
 
 
 def ensure_output_dir(out_dir):
@@ -42,13 +47,14 @@ def get_entry_path(out_dir):
 
 def write_entry(text, out_dir):
     out_dir = ensure_output_dir(out_dir)
-    get_entry_path(out_dir).write_text(text, encoding="utf-8")
+    get_entry_path(out_dir).write_text(text, encoding=DEFAULT_ENCODING)
 
 
 def main():
-    validate(LINE)
+    text = get_line()
+    validate(text)
     out_dir = resolve_output_dir()
-    write_entry(LINE, out_dir)
+    write_entry(text, out_dir)
 
 
 if __name__ == "__main__":
