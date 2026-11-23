@@ -29,9 +29,13 @@ def resolve_output_dir():
     return Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
 
 
+def get_entry_path(out_dir):
+    return out_dir / "entry.txt"
+
+
 def write_entry(text, out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "entry.txt").write_text(text, encoding="utf-8")
+    get_entry_path(out_dir).write_text(text, encoding="utf-8")
 
 
 def main():
