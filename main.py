@@ -9,6 +9,13 @@ from pathlib import Path
 
 LINE = "My agent fixed the failing test by deleting it, then proudly reported that all tests were passing."
 
+DEFAULT_OUTPUT_DIR = "/output"
+
+
+def ensure_output_dir(out_dir):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return out_dir
+
 
 def check_length(text):
     if not (1 <= len(text) <= 200):
@@ -26,7 +33,7 @@ def validate(text):
 
 
 def resolve_output_dir():
-    return Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    return Path(os.environ.get("MAKEFUN_OUTPUT_DIR", DEFAULT_OUTPUT_DIR))
 
 
 def get_entry_path(out_dir):
@@ -34,7 +41,7 @@ def get_entry_path(out_dir):
 
 
 def write_entry(text, out_dir):
-    out_dir.mkdir(parents=True, exist_ok=True)
+    out_dir = ensure_output_dir(out_dir)
     get_entry_path(out_dir).write_text(text, encoding="utf-8")
 
 
